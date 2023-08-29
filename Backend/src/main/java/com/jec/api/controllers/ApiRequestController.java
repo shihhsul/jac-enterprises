@@ -37,7 +37,7 @@ public class ApiRequestController {
 
         List<Article> articles = new ArrayList<>();
 
-        String apiUrl = "https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=5";
+        String apiUrl = "https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=21";
         String response = restTemplate.getForObject(apiUrl, String.class);
 
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
@@ -50,24 +50,25 @@ public class ApiRequestController {
             List<Integer> objectIds = new ArrayList<>();
             responseData.get("objectIDs").forEach(id -> objectIds.add(id.asInt()));
 
-            while (articles.size()<10){
+            while (articles.size() < 50 && objectIds.size() != 0) {
                 Random random = new Random();
                 int randomIndex = random.nextInt(objectIds.size());
                 int randomId = objectIds.remove(randomIndex);
 
                 String apiUrl2 = "https://collectionapi.metmuseum.org/public/collection/v1/objects/" + randomId;
                 String response2 = restTemplate.getForObject(apiUrl2, String.class);
-
                 JsonNode currentResponseData = objectMapper.readTree(response2);
+
                 Article currentArticle = new Article();
                 currentArticle.setTitle(currentResponseData.get("title").asText());
                 currentArticle.setAuthor(currentResponseData.get("artistDisplayName").asText());
                 currentArticle.setSummary(null);
                 currentArticle.setImage(currentResponseData.get("primaryImage").asText());
-                if(currentArticle.getTitle()!=""&&currentArticle.getAuthor()!=""&&currentArticle.getImage()!=""){
+                if (currentArticle.getTitle() != "" && currentArticle.getImage() != "") {
                     articles.add(currentArticle);
                 }
-
+                System.out.println(objectIds.size());
+                System.out.println(articles.size());
             }
         } catch (IOException e) {
             e.printStackTrace();
