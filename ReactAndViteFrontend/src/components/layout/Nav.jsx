@@ -1,24 +1,23 @@
 import { Link } from "react-router-dom";
-import "./Nav.css"
+import "./Nav.css";
 
 const Nav = () => {
   return (
-    <header className="header"> 
-      <div className="logo" > </div>
-        <nav>
-          <ul>
+    <header className="header">
+      <div className="logo"> </div>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/About">About</Link>
+          </li>
+          <li>
+            <Link to="/Contact">Contact</Link>
+          </li>
           <li>
             <Link to="/">Main</Link>
           </li>
-            <li>
-              <Link to="/About">About</Link>
-            </li>
-            <li>
-              <Link to="/Contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
-
+        </ul>
+      </nav>
     </header>
   );
 };
