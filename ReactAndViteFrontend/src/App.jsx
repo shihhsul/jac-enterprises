@@ -1,29 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from 'react-router'
+//import ApiRequest from './components/apiRequest'
+import Layout from './components/layout/Layout'
+import About from './components/pages/About'
+import Contact from './components/pages/Contact'
+import Main from './components/pages/Main'
 import BoredApiRequest from './components/BoredApiRequest'
 import NasaApiRequest from './components/NasaApiRequest'
+
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <NasaApiRequest/>
-      <BoredApiRequest/>
-    </>
+<Layout>
+<Routes>
+<Route path='/' element={<Main/>}/>
+<Route path="/About" element={<About />} />
+<Route path="/Contact" element={<Contact/>} />
+</Routes>
+</Layout>
+// <NasaApiRequest/>
+//<BoredApiRequest/>
+// TO-DO: API request should be in main page, I believe...
   )
 }
 
