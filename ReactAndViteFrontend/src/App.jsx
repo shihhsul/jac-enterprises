@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router'
-import ApiRequest from './components/apiRequest'
+//import ApiRequest from './components/apiRequest'
 import Layout from './components/layout/Layout'
 import About from './components/pages/About'
 import Contact from './components/pages/Contact'
