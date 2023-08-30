@@ -15,9 +15,9 @@ const About = () => {
   return (
     <section>
       <h1>About</h1>
-      <ul>
+      {/* <ul>
         <AboutList bios={DUMMY_DATA} />
-      </ul>
+      </ul> */}
     </section>
   );
 };
