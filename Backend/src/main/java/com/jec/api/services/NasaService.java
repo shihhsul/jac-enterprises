@@ -5,35 +5,36 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jec.api.entitites.Article;
-import com.jec.api.repositories.ArticleRepository;
+import com.jec.api.entitites.NasaArticle;
+import com.jec.api.repositories.NasaArticleRepository;
+import com.jec.api.controllers.ApiRequestController;
 
 @Service
-public class ArticleService {
+public class NasaService {
 
     @Autowired
-    private ArticleRepository ArticleRepository;
+    private NasaArticleRepository ArticleRepository;
 
     /*
      * Adds a new Article to the repository (db). The "C" (create) in CRUD
      */
-    public void createArticle(Article article) {
+    public void createArticle(NasaArticle article) {
         this.ArticleRepository.save(article);
     }
 
     /*
      * Gets all the Articles in the repo (db). The "R" (read) in CRUD
      */
-    public List<Article> getAllArticles() {
+    public List<NasaArticle> getAllArticles() {
         return ArticleRepository.findAll();
     }
 
     /*
      * Gets a specific Article by its id. The "R" (read) in CRUD
      */
-    public Article getArticleById(Integer id) {
+    public NasaArticle getArticleById(Integer id) {
 
-        Optional<Article> article = ArticleRepository.findById(id);
+        Optional<NasaArticle> article = ArticleRepository.findById(id);
         if (article.isPresent()) {
             return article.get();
         }
@@ -44,8 +45,8 @@ public class ArticleService {
      * Updates an existing Article, found by a specific id. The "U" (update) in
      * CRUD
      */
-    public Article updateArticle(Integer id, Article updatedVpet) {
-        Article existingarticle = getArticleById(id);
+    public NasaArticle updateArticle(Integer id, NasaArticle updatedVpet) {
+        NasaArticle existingarticle = getArticleById(id);
 
         if (existingarticle != null) {
             // existingarticle.setBladder(updatedVpet.getBladder());

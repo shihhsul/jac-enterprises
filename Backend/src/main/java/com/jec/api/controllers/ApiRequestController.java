@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jec.api.entitites.Article;
-import com.jec.api.services.ArticleService;
+import com.jec.api.entitites.BoredArticle;
+import com.jec.api.entitites.NasaArticle;
+import com.jec.api.services.NasaService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,52 +30,83 @@ import java.util.Random;
 public class ApiRequestController {
 
     @Autowired
-    ArticleService articleServ;
+    NasaService articleServ;
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @GetMapping("/artworks")
-    public List<Article> getArtworks() {
+    @GetMapping("/bored")
+    public List<BoredArticle> getBored() {
+        List<BoredArticle> output = new ArrayList<>();
+        while (output.size() < 10) {
+            HttpHeaders headers = new HttpHeaders();
+            String apiUrl = "http://www.boredapi.com/api/activity/";
+            ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    String.class);
+            String response = responseEntity.getBody();
+            JsonNode jsonElement;
+            try {
+                jsonElement = objectMapper.readTree(response);
+                BoredArticle currentArticle = new BoredArticle();
+                currentArticle.setActivity(jsonElement.get("activity").asText());
+                currentArticle.setAccessibility(jsonElement.get("accessibility").asText());
+                currentArticle.setLink(jsonElement.get("link").asText());
+                currentArticle.setParticipants(jsonElement.get("participants").asText());
+                output.add(currentArticle);
+            } catch (JsonMappingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return output;
+    }
 
-        List<Article> articles = new ArrayList<>();
+    @GetMapping("/NASA")
+    public List<NasaArticle> getNASA() {
+        List<NasaArticle> output = new ArrayList<>();
 
-        String apiUrl = "https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=21";
-        String response = restTemplate.getForObject(apiUrl, String.class);
+        HttpHeaders headers = new HttpHeaders();
+        String apiKey = "9Ywd2QQ6znC1eOkRYRb3X0trteKgNO5D7LfKdejD";
+        headers.set("api_key", apiKey);
 
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
-        converters.add(converter);
-        restTemplate.setMessageConverters(converters);
+        String apiUrl = "https://api.nasa.gov/planetary/apod?api_key=" + apiKey
+                + "&start_date=2023-08-01&end_date=2023-08-15";
+        ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, new HttpEntity<>(headers),
+                String.class);
+        String response = responseEntity.getBody();
 
         try {
-            JsonNode responseData = objectMapper.readTree(response);
-            List<Integer> objectIds = new ArrayList<>();
-            responseData.get("objectIDs").forEach(id -> objectIds.add(id.asInt()));
+            JsonNode jsonArray = objectMapper.readTree(response);
+            if (jsonArray.isArray()) {
+                for (JsonNode jsonElement : jsonArray) {
+                    String title = jsonElement.get("title").asText();
+                    String explanation = jsonElement.get("explanation").asText();
+                    String url = jsonElement.get("url").asText();
+                    String author;
+                    try {
+                        author = jsonElement.get("copyright").asText();
+                    } catch (Exception e) {
+                        author = "PUBLIC IMAGE";
+                    }
 
-            while (articles.size() < 50 && objectIds.size() != 0) {
-                Random random = new Random();
-                int randomIndex = random.nextInt(objectIds.size());
-                int randomId = objectIds.remove(randomIndex);
+                    NasaArticle currentArticle = new NasaArticle();
+                    author = author.replace("\n", " ");
+                    currentArticle.setAuthor(author);
+                    currentArticle.setImage(url);
+                    currentArticle.setTitle(title);
+                    currentArticle.setSummary(explanation);
 
-                String apiUrl2 = "https://collectionapi.metmuseum.org/public/collection/v1/objects/" + randomId;
-                String response2 = restTemplate.getForObject(apiUrl2, String.class);
-                JsonNode currentResponseData = objectMapper.readTree(response2);
-
-                Article currentArticle = new Article();
-                currentArticle.setTitle(currentResponseData.get("title").asText());
-                currentArticle.setAuthor(currentResponseData.get("artistDisplayName").asText());
-                currentArticle.setSummary(null);
-                currentArticle.setImage(currentResponseData.get("primaryImage").asText());
-                if (currentArticle.getTitle() != "" && currentArticle.getImage() != "") {
-                    articles.add(currentArticle);
+                    output.add(currentArticle);
                 }
-                System.out.println(objectIds.size());
-                System.out.println(articles.size());
             }
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return articles;
+
+        return output;
     }
 }

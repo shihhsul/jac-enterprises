@@ -7,24 +7,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Entity
-public class Article {
+public class NasaArticle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "title")
+    @Column(name = "Title")
     private String title;
-    @Column(name = "author")
+    @Column(name = "Author")
     private String author;
-    @Column(name = "summary")
+
+    @Column(name = "Summary", length = 6000)
     private String summary;
 
-    @Column(name = "image")
+    @Column(name = "Image")
     private String image;
 
-    public Article() {
+    public NasaArticle() {
     }
 
     public int getId() {
