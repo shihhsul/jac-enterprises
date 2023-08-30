@@ -11,33 +11,34 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.jec.api.entitites.Article;
-import com.jec.api.services.ArticleService;
+import com.jec.api.entitites.NasaArticle;
+import com.jec.api.services.NasaService;
 
+//a class designed to package data from api requests for easy use on frontend
 @RestController
-@RequestMapping("/api/articles")
-public class ArticleController {
+@RequestMapping("/api/nasa")
+public class NasaArticleController {
 
     @Autowired
-    ArticleService ArticleServ;
+    NasaService ArticleServ;
 
     @PostMapping("/new")
-    public void addArticle(@RequestBody Article Article) {
+    public void addArticle(@RequestBody NasaArticle Article) {
         this.ArticleServ.createArticle(Article);
     }
 
     @GetMapping("/findall")
-    public List<Article> findAllArticles() {
+    public List<NasaArticle> findAllArticles() {
         return this.ArticleServ.getAllArticles();
     }
 
     @GetMapping("/{id}")
-    public Article findArticleById(@PathVariable Integer id) {
+    public NasaArticle findArticleById(@PathVariable Integer id) {
         return this.ArticleServ.getArticleById(id);
     }
 
     @PutMapping("/modify/{id}")
-    public Article modifyArticle(@PathVariable Integer id, @RequestBody Article updatedArticle) {
+    public NasaArticle modifyArticle(@PathVariable Integer id, @RequestBody NasaArticle updatedArticle) {
         return this.ArticleServ.updateArticle(id, updatedArticle);
     }
 
