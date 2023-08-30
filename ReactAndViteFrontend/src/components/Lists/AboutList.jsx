@@ -18,7 +18,7 @@ const AboutList = (props) => {
 };
 
 AboutList.propTypes = {
-abouts: PropTypes.string,
+abouts: PropTypes.string
 };
 
 export default AboutList;

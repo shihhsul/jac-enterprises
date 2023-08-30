@@ -1,9 +1,9 @@
 import AboutList from "../Lists/AboutList";
 
 const About = () => {
-  const DUMMY_DATA = [
+  const STUDENT_DATA = [
     {
-      id: "m1",
+      id: "s1",
       name: "Brian Mgbokwere",
       image: "ReactAndViteFrontend/src/components/photos/Brian.jpg",
       biography:
@@ -15,9 +15,9 @@ const About = () => {
   return (
     <section>
       <h1>About</h1>
-      {/* <ul>
-        <AboutList bios={DUMMY_DATA} />
-      </ul> */}
+      <ul>
+        <AboutList abouts={STUDENT_DATA} />
+      </ul>
     </section>
   );
 };
