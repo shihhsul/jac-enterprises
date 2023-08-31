@@ -21,7 +21,7 @@ const About = () => {
 
   return (
     <section>
-      <h1>About</h1>
+      <h1>Meet The Team</h1>
       <ul>
         <AboutList abouts={STUDENT_DATA} />
       </ul>
