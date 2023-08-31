@@ -9,12 +9,13 @@ const About = () => {
       biography:
         "I am a graduate from Northern Illinois University, where I earned my Bachelor of Science in Health Sciences. My studies focused on environmental health, physical and mental health, and how to best deliver care to under-served communities. Despite my background, I have always had an interest in software development.",
     },
+    
 
   ];
 
   return (
     <section>
-      <h1>About</h1>
+      <h1>Meet The Team</h1>
       <ul>
         <AboutList abouts={STUDENT_DATA} />
       </ul>
