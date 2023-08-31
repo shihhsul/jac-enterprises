@@ -12,7 +12,7 @@ const About = () => {
     {
       id: "s2",
       name: "Yailin Acosta",
-      image: "ReactAndViteFronted/src/components/photos/Yailin.jpg",
+      image: "ReactAndViteFrontend/src/components/photos/Yailin.jpg",
       biography:
         "I have multiple certifications, in the health and food industry, but I have always had on interested in the tech field. Once I started working at Amazon, I decided to study software development."
     }

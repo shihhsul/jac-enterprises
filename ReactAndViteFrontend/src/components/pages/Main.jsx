@@ -1,4 +1,4 @@
-import { title } from 'process'
+// import { title } from 'process'
 import  style  from './Main.css'
 
 const Main = () => { 
