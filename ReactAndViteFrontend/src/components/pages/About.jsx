@@ -15,6 +15,13 @@ const About = () => {
       image: "ReactAndViteFrontend/src/components/photos/Yailin.jpg",
       biography:
         "I have multiple certifications, in the health and food industry, but I have always had on interested in the tech field. Once I started working at Amazon, I decided to study software development."
+    },
+    {
+      id: "s3",
+      name: "Steven Lin",
+      image: "ReactAndViteFrontend/src/components/photos/Steven.jpg",
+      biography:
+        "I recently graduated from Pennsylvania State University with Information Science and Technology degree. IST is a very awesome major, we have cybersecurity class, UI/UX design class and a lots of programming class. This is how I start step into the Tech field"
     }
 
   ];
