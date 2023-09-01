@@ -1,6 +1,7 @@
 package com.jec.api.controllers;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jec.api.entitites.BoredArticle;
 import com.jec.api.entitites.BoredArticle;
 import com.jec.api.entitites.BoredArticle;
 import com.jec.api.services.BoredService;
@@ -47,5 +49,13 @@ public class BoredArticleController {
     @DeleteMapping("/delete/{id}")
     public void removeArticle(@PathVariable Integer id) {
         this.boredServ.deleteArticleById(id);
+    }
+
+    @GetMapping("/random")
+    public BoredArticle getRandom() {
+        List<BoredArticle> arr = this.boredServ.getAllArticles();
+        Random random = new Random();
+        int randomIndex = random.nextInt(arr.size());
+        return arr.get(randomIndex);
     }
 }

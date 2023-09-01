@@ -6,7 +6,7 @@ function NasaApiRequest() {
 
   useEffect(() => {
     // Send a GET request to your backend API endpoint
-    axios.get('http://localhost:8080/api/nasa/findall')
+    axios.get('http://localhost:8080/api/nasa/random')
       .then(response => {
         setData(response.data);
       })
@@ -17,17 +17,10 @@ function NasaApiRequest() {
 
   return (
     <div>
-      <ul>
-        {/* Map through the data array and render each item */}
-        {data.map(article => (
-          <li key={article.id}>
-            <h2>{article.title}</h2>
-            <p>Author: {article.author}</p>
-            <p>Summary: {article.summary}</p>
-            <img src={article.image} alt="Article" />
-          </li>
-        ))}
-      </ul>
+            <h2>{data.title}</h2>
+            <p>Author: {data.author}</p>
+            <p>Summary: {data.summary}</p>
+            <img src={data.image} alt="Article" />
     </div>
   );
 }

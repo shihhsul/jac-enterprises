@@ -6,7 +6,7 @@ function BoredApiRequest() {
 
   useEffect(() => {
     // Send a GET request to your backend API endpoint
-    axios.get('http://localhost:8080/api/bored/findall')
+    axios.get('http://localhost:8080/api/bored/random')
       .then(response => {
         setData(response.data);
       })
@@ -17,17 +17,10 @@ function BoredApiRequest() {
 
   return (
     <div>
-      <ul>
-        {/* Map through the data array and render each item */}
-        {data.map(article => (
-          <li key={article.id}>
-            <h2>{article.activity}</h2>
-            <p>Author: {article.participants}</p>
-            <p>Summary: {article.accessibility}</p>
-            <img src={article.link} alt="link" />
-          </li>
-        ))}
-      </ul>
+            <h2>{data.activity}</h2>
+            <p>Participants: {data.participants}</p>
+            <p>Accessibility: {data.accessibility}</p>
+            <img src={data.link} alt="link" />
     </div>
   );
 }

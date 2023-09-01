@@ -1,6 +1,7 @@
 package com.jec.api.controllers;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,30 +21,38 @@ import com.jec.api.services.NasaService;
 public class NasaArticleController {
 
     @Autowired
-    NasaService ArticleServ;
+    NasaService nasaServ;
 
     @PostMapping("/new")
     public void addArticle(@RequestBody NasaArticle Article) {
-        this.ArticleServ.createArticle(Article);
+        this.nasaServ.createArticle(Article);
     }
 
     @GetMapping("/findall")
     public List<NasaArticle> findAllArticles() {
-        return this.ArticleServ.getAllArticles();
+        return this.nasaServ.getAllArticles();
     }
 
     @GetMapping("/{id}")
     public NasaArticle findArticleById(@PathVariable Integer id) {
-        return this.ArticleServ.getArticleById(id);
+        return this.nasaServ.getArticleById(id);
     }
 
     @PutMapping("/modify/{id}")
     public NasaArticle modifyArticle(@PathVariable Integer id, @RequestBody NasaArticle updatedArticle) {
-        return this.ArticleServ.updateArticle(id, updatedArticle);
+        return this.nasaServ.updateArticle(id, updatedArticle);
     }
 
     @DeleteMapping("/delete/{id}")
     public void removeArticle(@PathVariable Integer id) {
-        this.ArticleServ.deleteArticleById(id);
+        this.nasaServ.deleteArticleById(id);
+    }
+
+    @GetMapping("/random")
+    public NasaArticle getRandom() {
+        List<NasaArticle> arr = this.nasaServ.getAllArticles();
+        Random random = new Random();
+        int randomIndex = random.nextInt(arr.size());
+        return arr.get(randomIndex);
     }
 }
