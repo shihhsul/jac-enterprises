@@ -17,9 +17,8 @@ function App() {
 <Route path="/Contact" element={<Contact/>} />
 </Routes>
 </Layout>
-//<NasaApiRequest/>
-//<BoredApiRequest/>
-// TO-DO: API request should be in main page, I believe...
+/*<NasaApiRequest/>
+<BoredApiRequest/> */
   )
 }
 
