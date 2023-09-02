@@ -22,6 +22,13 @@ const About = () => {
       image: "ReactAndViteFrontend/src/components/photos/Steven.jpg",
       biography:
         "I recently graduated from Pennsylvania State University with Information Science and Technology degree. IST is a very awesome major, we have cybersecurity class, UI/UX design class and a lots of programming class. This is how I start step into the Tech field"
+    },
+    {
+      id: "s4",
+      name: "Noah Marsteller",
+      image: "ReactAndViteFrontend/src/components/photos/noah.jpg",
+      biography:
+        "I am a Cincinnati native, and I work at Amazon Air in Wilmington"
     }
 
   ];
